@@ -1,0 +1,151 @@
+---
+title: "Evolution Nombre de décès en Belgique"
+author: "___"
+date: "16/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Situation
+
+L'office des statistiques de Belgique suit le nombre de décès en Belgique au cours du temps. 
+
+Les données utilisées sont disponible via le lien suivant <https://statbel.fgov.be/fr/themes/population/mortalite-et-esperance-de-vie/tables-de-mortalite-et-esperance-de-vie>
+
+# But 
+
+Tentez d'apporter des éléments de réponse aux questions suivantes :
+ 
+- y a t'il un mois où le nombre de décès est plus élevé ? 
+
+- y a t'il une tendance à l'augmentation ou la diminution du nombre de décès au cours du temps ? 
+
+# Analyse
+
+<!--- Consignes 
+Importez le jeu de données et convertissez ce dernier en série temporelle. 
+---->
+
+```{r import}
+death <- 
+death_ts <- ts()
+```
+
+<!--- Consignes 
+Réalisez un graphique de votre objet death_ts. Renseignez vos observations à la suite de ce graphique en maximum 3 lignes.
+---->
+
+```{r tsplot}
+
+```
+
+<!--- Consignes
+Etudiez votre série temporelle. Intéressez vous aux début et à la fin de votre série. Renseignez vos observations en maximum 1 lignes.
+--->
+
+```{r tsinfo}
+
+```
+
+<!--- consignes
+Réalisez des agrégation/des statistiques glissantes. Réalisez un graphique de ces données. Renseignez vos observations en maximum 2 phrases.
+--->
+
+```{r statslide}
+
+```
+
+<!--- consignes
+Réalisez un graphique avec des boites de dispersion afin de faire ressortir les nombre de décès par mois. Renseignez vos observations en maximum 2 phrases.
+--->
+
+```{r boxplot}
+
+```
+
+<!--- consignes
+Etudiez l'autocorrélation de cette série. Renseignez vos résultats en 1 phrases.
+--->
+
+```{r acf}
+
+```
+
+## Décomposition de la série
+
+Afin d'étudier la tendance générale de la série, il faut en retirer le cycle. 
+
+### Filtrage par la méthode des moyennes mobiles
+
+<!--- consignes
+Décomposez votre série grâce à la méthode des moyennes mobiles. Utilisez la fonction tsd(). Définissez judicieusement l'argument `order =`.
+--->
+
+```{r tsd}
+death_mb <- tsd()
+plot(death_mb)
+```
+
+<!--- consignes
+Utilisez la fonction extract() afin d'extraire de l'objet tsd la composante qui vous intéresse afin de répondre à la question relative à la tendance générale.
+--->
+
+```{r extract}
+
+```
+
+<!--- consignes
+Analysez cette composante afin de vérifier si un tendance générale est présente. Renseignez vos résultats en 3 lignes.
+--->
+
+```{r trend}
+
+```
+
+<!--- Bonus
+Vous souhaitez aller plus loin dans l'analyse et vous intéressez au résidus de votre décomposition. Rajoutez des chunks ci-dessous et continuer votre réflexion.
+--->
+
+### Décomposition par LOESS
+
+La méthode LOESS peut également vous servir à extraire la tendance.
+
+<!--- consignes
+Décomposez votre série grâce avec LOESS. Utilisez la fonction tsd(). Définissez judicieusement vos arguments.
+--->
+
+```{r tsd}
+death_loess <- tsd()
+plot(death_loess)
+```
+
+<!--- consignes
+Utilisez la fonction tseries() afin d'obtenir un objet mts avec l'ensemble des composantes. 
+--->
+
+```{r tseries}
+
+```
+
+<!--- consignes
+Sélectionnez la composante qui vous intéresse et étudier la tendance générale. Renseignez vos résultats en 3 lignes.
+--->
+
+```{r trendmts}
+
+```
+
+<!--- Bonus
+Vous souhaitez aller plus loin dans l'analyse et vous intéressez aux autres composantes de votre objet tsd. Rajoutez des chunks ci-dessous et continuer votre réflexion.
+--->
+
+
+# Conclusion 
+
+<!--- Consignes
+Renseignez en 5 phrases maximum les réponses aux questions posées dans le but de ce documents
+--->
+
