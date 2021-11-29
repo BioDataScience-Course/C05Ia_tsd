@@ -1,21 +1,12 @@
-# Série d'exercice sur la décomposition de séries spatio-teporelles
+# Décomposition de séries spatio-temporelles
 
 ## Avant-propos
 
-Ce projet est susceptible d'évoluer, vérifiez le lien suivant : <https://github.com/BioDataScience-Course/C05Ga_tsd>.
+Ce projet est susceptible d'évoluer, vérifiez le lien suivant : <https://github.com/BioDataScience-Course/C05Ia_tsd>.
 
 
-## Objectifs d'apprentissage
+## Objectifs
 
-Ce projet vous demande d'acquérir les compétences vous permettant de décomposer une série spatio-temporelle à l'aide de différentes méthodes de filtrage. 
+Vous allez mettre en pratique de vos compétences permettant de décomposer et de filtrer des séries spatio-temporelles. Ce projet est **individuel** et **cadré**. Il doit être terminé pour la fin du module 5.
 
-## Procédure
-
-Ce projet individuel est un projet **cadré**. Ce dernier doit être terminé pour la fin de ce module.
-
-Complétez le fichier suivant :
-
-- death.rmd dans le dossier docs
-
-
-
+Complétez le fichier `docs/death.Rmd` en fonction des indications qui s'y trouvent en commentaires. Assurez-vous à la fin que la version HTML final du document est compilable (bouton **Knit**) sans erreurs.

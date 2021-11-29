@@ -1,151 +1,118 @@
 ---
-title: "Evolution Nombre de décès en Belgique"
+title: "Évolution des décès en Belgique"
 author: "___"
-date: "16/11/2020"
+date: "___"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+SciViews::R
 ```
 
-# Situation
 
-L'office des statistiques de Belgique suit le nombre de décès en Belgique au cours du temps. 
+## Introduction
 
-Les données utilisées sont disponible via le lien suivant <https://statbel.fgov.be/fr/themes/population/mortalite-et-esperance-de-vie/tables-de-mortalite-et-esperance-de-vie>
+L'office des statistiques de Belgique répertorie le nombre de décès en Belgique au cours du temps. Ces données sont disponibles ici : <https://statbel.fgov.be/fr/themes/population/mortalite-et-esperance-de-vie/tables-de-mortalite-et-esperance-de-vie>
 
-# But 
 
-Tentez d'apporter des éléments de réponse aux questions suivantes :
+## But 
+
+Apportez des éléments de réponse aux questions suivantes :
  
-- y a t'il un mois où le nombre de décès est plus élevé ? 
+- Y-a-t'il un mois de l'année où le nombre de décès est plus élevé ? 
 
-- y a t'il une tendance à l'augmentation ou la diminution du nombre de décès au cours du temps ? 
+- Y-a-t'il une tendance à l'augmentation ou la diminution du nombre de décès au cours du temps ? 
 
-# Analyse
 
-<!--- Consignes 
-Importez le jeu de données et convertissez ce dernier en série temporelle. 
----->
+## Analyse
+
+<!--% Importez le jeu de données à partir du fichier `death_month.csv` dans le dossier `data` et convertissez ce dernier en série temporelle univariée. -->
 
 ```{r import}
-death <- 
-death_ts <- ts()
+death <- ___
+death_ts <- ts(___)
 ```
 
-<!--- Consignes 
-Réalisez un graphique de votre objet death_ts. Renseignez vos observations à la suite de ce graphique en maximum 3 lignes.
----->
+<!--% Réalisez un graphique de votre objet `death_ts`. Décrivez ensuite ce graphique en maximum 3 lignes. -->
 
 ```{r tsplot}
 
 ```
 
-<!--- Consignes
-Etudiez votre série temporelle. Intéressez vous aux début et à la fin de votre série. Renseignez vos observations en maximum 1 lignes.
---->
+<!--% Décrivez les caractéristiques temporelles de votre série (début, fin, fréquence, etc.). -->
 
 ```{r tsinfo}
 
 ```
 
-<!--- consignes
-Réalisez des agrégation/des statistiques glissantes. Réalisez un graphique de ces données. Renseignez vos observations en maximum 2 phrases.
---->
+<!--% Calculez des statistiques glissantes accompagnées d'une visualisation graphique. Décrivez ce que vous y observez en maximum 2 phrases. -->
 
 ```{r statslide}
 
 ```
 
-<!--- consignes
-Réalisez un graphique avec des boites de dispersion afin de faire ressortir les nombre de décès par mois. Renseignez vos observations en maximum 2 phrases.
---->
+<!--% Réalisez une agrégation des données par mois, ainsi qu'un graphique de boites de dispersion parallèles afin de faire ressortir la distribution du nombre de décès pour chaque mois. Faites vos commentaires en maximum 2 phrases. -->
 
 ```{r boxplot}
 
 ```
 
-<!--- consignes
-Etudiez l'autocorrélation de cette série. Renseignez vos résultats en 1 phrases.
---->
+<!--% Étudiez l'autocorrélation de cette série et expliquez ce que vous y observez. -->
 
 ```{r acf}
 
 ```
 
-## Décomposition de la série
 
-Afin d'étudier la tendance générale de la série, il faut en retirer le cycle. 
+### Filtrage par les moyennes mobiles et analyse de tendance générale
 
-### Filtrage par la méthode des moyennes mobiles
+<!--%  Afin d'étudier la tendance générale de la série, retirez-en d'abord le cycle grâce à la méthode des moyennes mobiles. Définissez judicieusement l'ordre de votre filtrage. -->
 
-<!--- consignes
-Décomposez votre série grâce à la méthode des moyennes mobiles. Utilisez la fonction tsd(). Définissez judicieusement l'argument `order =`.
---->
-
-```{r tsd}
-death_mb <- tsd()
+```{r tsd1}
+death_mb <- tsd(___)
 plot(death_mb)
 ```
 
-<!--- consignes
-Utilisez la fonction extract() afin d'extraire de l'objet tsd la composante qui vous intéresse afin de répondre à la question relative à la tendance générale.
---->
+<!--% Utilisez ensuite la fonction `extract()` pour récupérer la composante qui vous intéresse afin d'ensuite pouvoir étudier la tendance générale. -->
 
 ```{r extract}
 
 ```
 
-<!--- consignes
-Analysez cette composante afin de vérifier si un tendance générale est présente. Renseignez vos résultats en 3 lignes.
---->
+<!--% Analysez cette composante afin de vérifier si un tendance générale est présente. Commentez ensuite en 3 lignes maximum. -->
 
 ```{r trend}
 
 ```
 
-<!--- Bonus
-Vous souhaitez aller plus loin dans l'analyse et vous intéressez au résidus de votre décomposition. Rajoutez des chunks ci-dessous et continuer votre réflexion.
---->
+<!--% Bonus. Vous souhaitez aller plus loin dans l'analyse et vous vous intéressez aux résidus de votre décomposition. Rajoutez des chunks ci-dessous et continuer votre réflexion. -->
+
 
 ### Décomposition par LOESS
 
-La méthode LOESS peut également vous servir à extraire la tendance.
+<!--% Décomposez votre série grâce à la méthode LOESS afin d'extraire en une seule fois le cycle et la tendance générale. Utilisez la fonction `tsd()`. Choisissez judicieusement vos arguments pour un traitement ciblé. -->
 
-<!--- consignes
-Décomposez votre série grâce avec LOESS. Utilisez la fonction tsd(). Définissez judicieusement vos arguments.
---->
-
-```{r tsd}
-death_loess <- tsd()
+```{r tsd2}
+death_loess <- tsd(___)
 plot(death_loess)
 ```
 
-<!--- consignes
-Utilisez la fonction tseries() afin d'obtenir un objet mts avec l'ensemble des composantes. 
---->
+<!--% Utilisez la fonction `tseries()` afin d'obtenir un objet `mts` contenant l'ensemble des composantes. -->
 
 ```{r tseries}
 
 ```
 
-<!--- consignes
-Sélectionnez la composante qui vous intéresse et étudier la tendance générale. Renseignez vos résultats en 3 lignes.
---->
+<!--% Sélectionnez la composante qui vous intéresse et déterminez si un tendance générale significative existe dans cette série. Décrivez vos observations en 3 lignes maximum. -->
 
 ```{r trendmts}
 
 ```
 
-<!--- Bonus
-Vous souhaitez aller plus loin dans l'analyse et vous intéressez aux autres composantes de votre objet tsd. Rajoutez des chunks ci-dessous et continuer votre réflexion.
---->
+<!--% Bonus. Vous souhaitez aller plus loin dans l'analyse et vous vous intéressez aux autres composantes de votre objet `mts`. Rajoutez des chunks ci-dessous et continuer votre analyse. -->
 
 
-# Conclusion 
+## Discussion et conclusions 
 
-<!--- Consignes
-Renseignez en 5 phrases maximum les réponses aux questions posées dans le but de ce documents
---->
-
+<!--% Répondez aux questions posées dans la section but en 5 phrases maximum. -->
