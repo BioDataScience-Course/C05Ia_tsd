@@ -10,53 +10,34 @@ knitr::opts_chunk$set(echo = TRUE)
 SciViews::R
 ```
 
-
 ## Introduction
 
 L'office des statistiques de Belgique répertorie le nombre de décès en Belgique au cours du temps. Ces données sont disponibles ici : <https://statbel.fgov.be/fr/themes/population/mortalite-et-esperance-de-vie/tables-de-mortalite-et-esperance-de-vie>
 
-
-## But 
+## But
 
 Apportez des éléments de réponse aux questions suivantes :
- 
-- Y-a-t'il un mois de l'année où le nombre de décès est plus élevé ? 
 
-- Y-a-t'il une tendance à l'augmentation ou la diminution du nombre de décès au cours du temps ? 
+-   Y-a-t'il un mois de l'année où le nombre de décès est plus élevé ?
 
+-   Y-a-t'il une tendance à l'augmentation ou la diminution du nombre de décès au cours du temps ?
 
 ## Analyse
 
-<!--% Importez le jeu de données à partir du fichier `death_month.csv` dans le dossier `data` et convertissez ce dernier en série temporelle univariée. -->
+<!--% Importez le jeu de données à partir du fichier `death_month.csv` dans le dossier `data` et convertissez ce dernier en série temporelle univariée. Déterminez les caractéristiques temporelles de la série (début, fin, fréquence, etc.)-->
 
 ```{r import}
 death <- ___
 death_ts <- ts(___)
 ```
 
-<!--% Réalisez un graphique de votre objet `death_ts`. Décrivez ensuite ce graphique en maximum 3 lignes. -->
+<!--% Réalisez un graphique de votre objet `death_ts`. -->
 
 ```{r tsplot}
 
 ```
 
-<!--% Décrivez les caractéristiques temporelles de votre série (début, fin, fréquence, etc.). -->
-
-```{r tsinfo}
-
-```
-
-<!--% Calculez des statistiques glissantes accompagnées d'une visualisation graphique. Décrivez ce que vous y observez en maximum 2 phrases. -->
-
-```{r statslide}
-
-```
-
-<!--% Réalisez une agrégation des données par mois, ainsi qu'un graphique de boites de dispersion parallèles afin de faire ressortir la distribution du nombre de décès pour chaque mois. Faites vos commentaires en maximum 2 phrases. -->
-
-```{r boxplot}
-
-```
+<!--% Interprétez ce graphique en 2 phrases.-->
 
 <!--% Étudiez l'autocorrélation de cette série et expliquez ce que vous y observez. -->
 
@@ -64,30 +45,15 @@ death_ts <- ts(___)
 
 ```
 
+<!--% Interprétez ce graphique en 2 phrases.-->
 
-### Filtrage par les moyennes mobiles et analyse de tendance générale
+<!--% Calculez des statistiques glissantes accompagnées d'une visualisation graphique. -->
 
-<!--%  Afin d'étudier la tendance générale de la série, retirez-en d'abord le cycle grâce à la méthode des moyennes mobiles. Définissez judicieusement l'ordre de votre filtrage. -->
-
-```{r tsd1}
-death_mb <- tsd(___)
-plot(death_mb)
-```
-
-<!--% Utilisez ensuite la fonction `extract()` pour récupérer la composante qui vous intéresse afin d'ensuite pouvoir étudier la tendance générale. -->
-
-```{r extract}
+```{r statslide}
 
 ```
 
-<!--% Analysez cette composante afin de vérifier si un tendance générale est présente. Commentez ensuite en 3 lignes maximum. -->
-
-```{r trend}
-
-```
-
-<!--% Bonus. Vous souhaitez aller plus loin dans l'analyse et vous vous intéressez aux résidus de votre décomposition. Rajoutez des chunks ci-dessous et continuer votre réflexion. -->
-
+<!--% Interprétez ce graphique en 2 phrases.-->
 
 ### Décomposition par LOESS
 
@@ -104,15 +70,36 @@ plot(death_loess)
 
 ```
 
+### Etude de la tendance générale
+
 <!--% Sélectionnez la composante qui vous intéresse et déterminez si un tendance générale significative existe dans cette série. Décrivez vos observations en 3 lignes maximum. -->
 
 ```{r trendmts}
 
 ```
 
-<!--% Bonus. Vous souhaitez aller plus loin dans l'analyse et vous vous intéressez aux autres composantes de votre objet `mts`. Rajoutez des chunks ci-dessous et continuer votre analyse. -->
+<!--% Interprétez vos résultats en 2 phrases.-->
 
+### Etude de la saisonnalité
 
-## Discussion et conclusions 
+<!--% Sélectionnez la composante qui vous intéresse et étudiez les cycles présents dans cette série.-->
+
+```{r cyclemts}
+
+```
+
+<!--% Interprétez vos résultats en 2 phrases.-->
+
+### Etude des résidus
+
+<!--% Sélectionnez la composante qui vous intéresse et étudiez-là.-->
+
+```{r resid}
+
+```
+
+<!--% Interprétez vos résultats en 2 phrases.-->
+
+## Discussion et conclusions
 
 <!--% Répondez aux questions posées dans la section but en 5 phrases maximum. -->

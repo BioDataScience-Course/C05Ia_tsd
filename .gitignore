@@ -49,3 +49,6 @@ docs/*.nb.html
 
 # OS-specific files
 .DS_Store
+
+# test/ 
+test/**
