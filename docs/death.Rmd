@@ -18,9 +18,9 @@ L'office des statistiques de Belgique répertorie le nombre de décès en Belgiq
 
 Apportez des éléments de réponse aux questions suivantes :
 
--   Y-a-t'il un mois de l'année où le nombre de décès est plus élevé ?
+-   Y a-t-il un mois de l'année où le nombre de décès est plus élevé ?
 
--   Y-a-t'il une tendance à l'augmentation ou la diminution du nombre de décès au cours du temps ?
+-   Y a-t-il une tendance à l'augmentation ou la diminution du nombre de décès au cours du temps ?
 
 ## Analyse
 
@@ -70,9 +70,9 @@ plot(death_loess)
 
 ```
 
-### Etude de la tendance générale
+### Étude de la tendance générale
 
-<!--% Sélectionnez la composante qui vous intéresse et déterminez si un tendance générale significative existe dans cette série. Décrivez vos observations en 3 lignes maximum. -->
+<!--% Sélectionnez la composante qui vous intéresse et déterminez si une tendance générale significative existe dans cette série. Décrivez vos observations en 3 lignes maximum. -->
 
 ```{r trendmts}
 
@@ -80,7 +80,7 @@ plot(death_loess)
 
 <!--% Interprétez vos résultats en 2 phrases.-->
 
-### Etude de la saisonnalité
+### Étude de la saisonnalité
 
 <!--% Sélectionnez la composante qui vous intéresse et étudiez les cycles présents dans cette série.-->
 
@@ -90,7 +90,7 @@ plot(death_loess)
 
 <!--% Interprétez vos résultats en 2 phrases.-->
 
-### Etude des résidus
+### Étude des résidus
 
 <!--% Sélectionnez la composante qui vous intéresse et étudiez-là.-->
 

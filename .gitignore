@@ -50,5 +50,8 @@ docs/*.nb.html
 # OS-specific files
 .DS_Store
 
+# Data_raw
+data/data_raw/**
+
 # test/ 
 test/**
