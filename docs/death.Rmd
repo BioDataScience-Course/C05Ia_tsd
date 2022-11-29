@@ -24,7 +24,7 @@ Apportez des éléments de réponse aux questions suivantes :
 
 ## Analyse
 
-<!--% Importez le jeu de données à partir du fichier `death_month.csv` dans le dossier `data` et convertissez ce dernier en série temporelle univariée. Déterminez les caractéristiques temporelles de la série (début, fin, fréquence, etc.)-->
+<!--% Importez le jeu de données à partir du fichier `death_month.rds` dans le dossier `data` et convertissez ce dernier en série temporelle univariée. Déterminez les caractéristiques temporelles de la série (début, fin, fréquence, etc.)-->
 
 ```{r import}
 death <- ___
