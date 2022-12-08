@@ -64,6 +64,8 @@ death_loess <- tsd(___)
 plot(death_loess)
 ```
 
+<!--% Interprétez et expliquez le choix des arguments employés pour décomposer votre série en maximum 4 phrases. -->
+
 <!--% Utilisez la fonction `tseries()` afin d'obtenir un objet `mts` contenant l'ensemble des composantes. -->
 
 ```{r tseries}
@@ -72,7 +74,7 @@ plot(death_loess)
 
 ### Étude de la tendance générale
 
-<!--% Sélectionnez la composante qui vous intéresse et déterminez si une tendance générale significative existe dans cette série. Décrivez vos observations en 3 lignes maximum. -->
+<!--% Sélectionnez la composante qui vous intéresse et répondez à la question suivante : "Y a-t-il une tendance à l'augmentation ou la diminution du nombre de décès au cours du temps ?" -->
 
 ```{r trendmts}
 
@@ -85,6 +87,14 @@ plot(death_loess)
 <!--% Sélectionnez la composante qui vous intéresse et étudiez les cycles présents dans cette série.-->
 
 ```{r cyclemts}
+
+```
+
+<!--% Interprétez vos résultats en 2 phrases.-->
+
+<!--% Répondez à la question suivante : "Y a-t-il un mois de l'année où le nombre de décès est plus élevé ?" -->
+
+```{r month}
 
 ```
 
