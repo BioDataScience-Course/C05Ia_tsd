@@ -186,8 +186,8 @@ select_answer(r"-{
 [] -   Un cycle à cinq ans est observé de manière significative.
 [] -   Par rapport à l'analyse spectrale sur les différences, le spectre est très semblable.
 [] -   Par rapport à l'analyse spectrale sur les différences, le spectre montre une sélection uniquement de d'un cycle annuel.
-[] -   Par rapport à l'analyse spectrale sur les différences, le spectre montre une sélection d'un cycle annuel avec échos significatifs à 2, 3, 4 et 5 ans (à cause du lissage par moyennes mobiles).
-[] -   Par rapport à l'analyse spectrale sur les différences, le spectre montre une sélection d'un cycle annuel avec échos non significatifs à 2, 3, 4 et 5 ans (à cause du lissage par moyennes mobiles).}-")
+[] -   Par rapport à l'analyse spectrale sur les différences, le spectre montre une sélection d'un cycle annuel avec échos significatifs à 2, 3, 4 et 5 ans^-1^ (à cause du lissage par moyennes mobiles).
+[] -   Par rapport à l'analyse spectrale sur les différences, le spectre montre une sélection d'un cycle annuel avec échos non significatifs à 2, 3, 4 et 5 ans^-1^ (à cause du lissage par moyennes mobiles).}-")
 ```
 
 Est-ce que la mortalité dépend du mois ?
