@@ -130,7 +130,9 @@ select_answer(r"-{
 [] -   Un cycle semestriel significatif est observé.
 [] -   Un cycle annuel significatif est observé.
 [] -   Un cycle à trois ans est observé de manière significative.
-[] -   Un cycle à cinq ans est observé de manière significative.}-")
+[] -   Un cycle à cinq ans est observé de manière significative.
+[] -   Un cycle à 1/3 ans, soit 4 mois est observé de manière significative.
+[] -   Un cycle à 1/5 ans est observé de manière significative.}-")
 ```
 
 ## Décomposition par LOESS
