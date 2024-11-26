@@ -26,13 +26,13 @@ L'office des statistiques de Belgique répertorie le nombre de décès en Belgiq
 
 # But
 
-Notre but est de décomposer et d'analyser ces données pour déterminer s'il y a une tendnace à log terme, un ou plusieurs cycles et si les décès sont plus fréquents à certaines périodes de l'année.
+Notre but est de décomposer et d'analyser ces données pour déterminer s'il y a une tendance à long terme, un ou plusieurs cycles et si les décès sont plus fréquents à certaines périodes de l'année.
 
 # Matériel et méthodes
 
 Les données de mortalité cumulée mensuelle entre 1992 et 2021 proviennent du site de l'office des statistiques de Belgique : <https://statbel.fgov.be/fr/themes/population/mortalite-et-esperance-de-vie/tables-de-mortalite-et-esperance-de-vie>
 
-L'analyse est réalisée avec la SciViews Box 2023 dans Saturn Cloud (Linux), utilisant le logiciel R(r R.version.string). Le package {pastecs} version r packageVersion("pastecs") est utilisé pour étudier la série temporelle.
+L'analyse est réalisée avec la SciViews Box 2023 dans Saturn Cloud (Linux), utilisant le logiciel R (`r R.version.string`). Le package {pastecs} version `r packageVersion("pastecs")` est utilisé pour étudier la série temporelle.
 
 # Analyse
 
@@ -102,7 +102,7 @@ select_answer(r"-{
 
 ## Stationnarisation et étude des cycles
 
-Étant donné que la série n'est pas stationnaire, nous ne pouvons effectuer d'analyse spectrale. Nous allos la filtrer par la méthode des différences afin de la stationnariser.
+Étant donné que la série n'est pas stationnaire, nous ne pouvons effectuer d'analyse spectrale. Nous allons la filtrer par la méthode des différences afin de la stationnariser.
 
 <!--% Stationnarisez la série grâce à la méthode des différences et effectuez-en le graphique. Untilisez un décalage (lag) adéquat pour vous assurer de conserver un maximum du cycle saisonnier dans la série filtrée. -->
 
@@ -113,7 +113,7 @@ plot(death_diff, col = 1:3)
 
 Nous pouvons à présent effectuer une analyse spectrale sur la série stationnarisée.
 
-<!--% Extrayez la composante filtrée avec `extract()` dans `death_stat`. Ensuite effectuez une analyse spectrale de la composante "filtered" avec un lissage relativement failbe de 3 et 5. -->
+<!--% Extrayez la composante filtrée avec `extract()` dans `death_stat`. Ensuite effectuez une analyse spectrale de la composante "filtered" avec un lissage relativement faible de 3 et 5. -->
 
 ```{r dspectrum, record='ROP', object='dspec', arg='bandwidth'}
 death_stat <- extract(___)
@@ -153,10 +153,12 @@ select_answer(r"-{
 [] -   La tendance générale montre une augmentation régulière et continue.
 [] -   La tendance générale montre une augmentation à partir de la moitié de la série.
 [] -   La tendance générale montre une augmentation à partir de la moitié de la série et des valeurs particulièrement élevées durant les deux dernières années.
+
 [] -   Le cycle saisonnier est régulier dans le temps.
 [] -   Le cycle saisonnier évolue dans le temps mais son amplitude reste constante.
 [] -   Le cycle saisonnier évolue dans le temps et son amplitude est à l'augmentation dans le temps.
 [] -   Le cycle saisonnier évolue dans le temps et son amplitude diminue dans le temps.
+
 [] -   Les résidus ne semble plus contenir beaucoup d'information.
 [] -   Les résidus ne semblent plus contenir beaucoup d'information, si ce n'est pour les deux dernières années ou des pics importants sont observables.}-")
 ```
@@ -186,6 +188,7 @@ select_answer(r"-{
 [] -   Un cycle annuel significatif est observé.
 [] -   Un cycle à trois ans est observé de manière significative.
 [] -   Un cycle à cinq ans est observé de manière significative.
+
 [] -   Par rapport à l'analyse spectrale sur les différences, le spectre est très semblable.
 [] -   Par rapport à l'analyse spectrale sur les différences, le spectre montre une sélection uniquement de d'un cycle annuel.
 [] -   Par rapport à l'analyse spectrale sur les différences, le spectre montre une sélection d'un cycle annuel avec échos significatifs à 2, 3, 4 et 5 ans^-1^ (à cause du lissage par moyennes mobiles).
@@ -225,6 +228,7 @@ racf <- ___
 select_answer(r"-{
 [] -   L’autocorrélation est forte.
 [] -   L’autocorrélation est faible.
+
 [] -   L'autocorrélation est typique d'une série cyclique.
 [] -   Le graphique de l'autocorrélation est représentatif d'un cycle mensuel dominant.
 [] -   Le graphique de l'autocorrélation est représentatif d'un cycle annuel dominant.

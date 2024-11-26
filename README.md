@@ -1,7 +1,5 @@
 # Décomposition de séries spatio-temporelles - évolution des décès en Belgique
 
-## Avant-propos
-
 Ce projet nécessite d'avoir assimilé l'ensemble des notions des modules quatre et cinq du cours de science des données biologiques 3 relatifs à l'analyse de séries spatio-temporelles. Il correspond au template GitHub <https://github.com/BioDataScience-Course/C05Ia_tsd>. Il est distribué sous licence [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 ## Objectifs
@@ -14,7 +12,7 @@ Ce projet est **individuel**, **court** et **cadré**. Vous devrez :
 
 ## Présentation des données
 
-L'office des statistiques de Belgique répertorie le nombre de décès en Belgique au cours du temps. Ces données sont disponibles ici : <https://statbel.fgov.be/fr/themes/population/mortalite-et-esperance-de-vie/tables-de-mortalite-et-esperance-de-vie>. Vous avez à votre disposition le nombre de décès par mois.
+L'office des statistiques de Belgique répertorie le nombre de décès en Belgique au cours du temps. Ces données sont disponibles ici : <https://statbel.fgov.be/fr/themes/population/mortalite-et-esperance-de-vie/tables-de-mortalite-et-esperance-de-vie>. Vous avez à votre disposition le nombre de décès par mois.
 
 ## Consignes
 
