@@ -44,7 +44,7 @@ death <- read(___)
 
 Voici le graphique de la mortalité cumulée mensuellement en Belgique de 1992 à 2021.
 
-<!--%  Convertissez le jeu de données en série temporelle univariée dans `death_ts` et réalisez-en un graphique. -->
+<!--%  Convertissez le jeu de données en série temporelle univariée dans `death_ts` et réalisez-en un graphique. Utilisez le `$` pour extraire la colonne d'intérêt.-->
 
 ```{r dts, record='ROA', object='death_ts', arg='tsp,class'}
 death_ts <- ts(___)
