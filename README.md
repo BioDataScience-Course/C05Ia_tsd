@@ -23,3 +23,7 @@ Lorsque vous aurez terminé de compléter les fichiers, compilez le document fin
 Vous avez une batterie de tests à votre disposition (onglet "Construire" -\> bouton "Construire tout") pour vérifier l'état de votre travail. Note : utilisez ces tests à la fin. Concentrez-vous d'abord sur vos analyses, puis faites un rendu final du document lorsque tout est complété, et seulement après, utilisez les tests. Il est contre-productif d'activer les tests à chaque nouvelle ligne de code ajoutée dans votre document ! **Afin d'éviter tout abus d'utilisation des tests, vous ne pouvez les utiliser que dix fois dans ce projet.**
 
 Lors de votre commit-pull-push final, assurez-vous de ne plus avoir d'erreur de compilation en fichier HTLM. Cela fait partie de l'exercice et les erreurs restant à ce niveau devront être lourdement sanctionnées. Vérifiez que votre dernier commit a bien été pushé sur GitHub avant la fin de la séance.
+
+## Utilisation de l’IA
+
+Dans le cadre de votre travail, vous avez le droit d’être aidé par l’intelligence artificielle. Le chatbot SciViews est disponible dans votre RStudio sur Saturn Cloud via l’addin Help. Il répond aux questions concernant le langage R, les statistiques et la science des données.
