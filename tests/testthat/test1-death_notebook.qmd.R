@@ -1,6 +1,6 @@
 # Vérifications de death_notebook.qmd
-death <- parse_rmd("../../death_notebook.qmd",
-  allow_incomplete = TRUE, parse_yaml = TRUE)
+death <- try(parsermd::parse_qmd("../../death_notebook.qmd"))
+expect_true(TRUE, info = death)
 
 test_that("Le bloc-notes est-il compilé en un fichier final HTML ?", {
   expect_true(is_rendered("death_notebook.qmd"))
@@ -33,10 +33,11 @@ test_that("La structure du document est-elle conservée ?", {
   # d'origine dans le dépôt "template" du document (lien au début du fichier
   # README.md).
   
-  expect_true(all(c("setup", "import", "dts", "dtscomment", "dacf",
+  expect_true(all(c("setup", "ai_comment", "import", "dts", "dtscomment", "dacf",
     "dacfcomment", "dtrend", "dtrendcomment", "dtsdiff", "dspectrum",
     "dspectrumcomment", "dloess", "dloesscomment", "tseries", "sspectrum",
-    "sspectrumcomment", "month", "monthcomment", "racf", "racfcomment")
+    "sspectrumcomment", "month", "monthcomment", "racf", "racfcomment",
+    "discussioncomment")
     %in% rmd_node_label(death)))
   # Un ou plusieurs labels de chunks nécessaires à l'évaluation manquent
   # Ce test échoue si vous avez modifié la structure du document, un ou
@@ -44,7 +45,7 @@ test_that("La structure du document est-elle conservée ?", {
   # Vérifiez la structure du document par rapport à la version d'origine dans
   # le dépôt "template" du document (lien au début du fichier README.md).
   
-  expect_true(any(duplicated(rmd_node_label(death))))
+  expect_false(any(duplicated(na.omit(rmd_node_label(death)))))
   # Un ou plusieurs labels de chunks sont dupliqués
   # Les labels de chunks doivent absolument être uniques. Vous ne pouvez pas
   # avoir deux chunks qui portent le même label. Vérifiez et modifiez le label
@@ -54,20 +55,21 @@ test_that("La structure du document est-elle conservée ?", {
 })
 
 test_that("L'entête YAML a-t-il été complété ?", {
-  expect_true(death[[1]]$author != "___")
-  expect_true(!grepl("__", death[[1]]$author))
-  expect_true(grepl("^[^_]....+", death[[1]]$author))
+  authors <- death[[1]]@yaml[["author"]]
+  expect_true(authors != "___")
+  expect_true(!grepl("__", authors))
+  expect_true(grepl("^[^_]....+", authors))
   # Le nom d'auteur n'est pas complété ou de manière incorrecte dans l'entête
   # Vous devez indiquer votre nom dans l'entête YAML à la place de "___" et
   # éliminer les caractères '_' par la même occasion.
   
-  expect_true(grepl("[a-z]", death[[1]]$author))
+  expect_true(grepl("[a-z]", authors))
   # Aucune lettre minuscule n'est trouvée dans le nom d'auteur
   # Avez-vous bien complété le champ 'author' dans l'entête YAML ?
   # Vous ne pouvez pas écrire votre nom tout en majuscules. Utilisez une
   # majuscule en début de nom et de prénom, et des minuscules ensuite.
   
-  expect_true(grepl("[A-Z]", death[[1]]$author))
+  expect_true(grepl("[A-Z]", authors))
   # Aucune lettre majuscule n'est trouvée dans le nom d'auteur
   # Avez-vous bien complété le champ 'author' dans l'entête YAML ?
   # Vous ne pouvez pas écrire votre nom tout en minuscules. Utilisez une
@@ -86,8 +88,8 @@ test_that("Chunks 'import' : importation des données brutes", {
   
   expect_true(is_identical_to_ref("import", "nrow"))
   # Le nombre de lignes dans le tableau `death` est incorrect
-  # Le filtre sur les lignes n'est pas correcte. Rélisez la consigne pour 
-  # appliquer le filtre souhaité sur l'altitude au quel les arbres sont mesurés.
+  # Vérifiez que vous importez bien le fichier `data/death_month.rds` avec
+  # `read()`, sans filtrer les lignes.
 })
 
 test_that("Chunks 'dts', 'dtscomment' : conversion en objet ts et visualisation", {
@@ -102,7 +104,7 @@ test_that("Chunks 'dts', 'dtscomment' : conversion en objet ts et visualisation"
   expect_true(is_identical_to_ref("dtscomment"))
   # L'interprétation du graphique de la série `death_ts` est (partiellement) 
   # fausse dans le chunk 'dtscomment'
-  # Vous devez cochez les phrases qui décrivent les graphiques et la table d'un
+  # Vous devez cocher les phrases qui décrivent les graphiques et la table d'un
   # 'x' entre les crochets [] -> [x]. Ensuite, vous devez recompiler la version
   # HTML du bloc-notes (bouton 'Rendu') sans erreur pour réactualiser les
   # résultats.
@@ -118,7 +120,7 @@ test_that("Chunks 'dacf' & 'dacfcomment' : Analyse de l'autocorrélation", {
   
   expect_true(is_identical_to_ref("dacfcomment"))
   # L'interprétation du graphique d'autocorrélation est (partiellement) fausse
-  # Vous devez cochez les phrases qui décrivent le graphique d'un 'x' entre les
+  # Vous devez cocher les phrases qui décrivent le graphique d'un 'x' entre les
   # crochets [] -> [x]. Ensuite, vous devez recompiler la version HTML du
   # bloc-notes (bouton 'Rendu') sans erreur pour réactualiser les résultats.
   # Assurez-vous de bien comprendre ce qui est coché ou pas : vous n'aurez plus
@@ -133,7 +135,7 @@ test_that("Chunks 'dtrend' & 'dtrendcomment' : Test de tendance générale par b
   
   expect_true(is_identical_to_ref("dtrendcomment"))
   # L'interprétation du graphique est (partiellement) fausse
-  # Vous devez cochez les phrases qui décrivent le graphique d'un 'x' entre les
+  # Vous devez cocher les phrases qui décrivent le graphique d'un 'x' entre les
   # crochets [] -> [x]. Ensuite, vous devez recompiler la version HTML du
   # bloc-notes (bouton 'Rendu') sans erreur pour réactualiser les résultats.
   # Assurez-vous de bien comprendre ce qui est coché ou pas : vous n'aurez plus
@@ -144,19 +146,19 @@ test_that("Chunks 'dtsdiff', 'dspectrum' & 'dspectrumcomment' : Cycles de la sé
   expect_true(is_identical_to_ref("dtsdiff"))
   # La stationnarisation de la série `death_ts` n'est pas réalisée ou est
   # incorrecte
-  # Avez-vous bien choisi un décalage (lag) de moitié de le fréquence de la
+  # Avez-vous bien choisi un décalage (lag) de moitié de la fréquence de la
   # série ?
   
   expect_true(is_identical_to_ref("dspectrum"))
   # Le graphique n'est pas réalisé ou est incorrect.
   # Avez-vous extrait la composante "filtered" ?
   # Avez-vous bien employé les valeurs de 3 et de 5 pour lisser le spectre ?
-  # Avez-vous effectué le périodogramme de la série stationnariée 'death_stat' ?
-  # Avez-vous bien assigné le résultat du calcul à `dspec' ?
+  # Avez-vous effectué le périodogramme de la série stationnarisée 'death_stat' ?
+  # Avez-vous bien assigné le résultat du calcul à `dspec` ?
   
   expect_true(is_identical_to_ref("dspectrumcomment"))
   # L'interprétation du graphique est (partiellement) fausse
-  # Vous devez cochez la phrase qui décrit le graphique d'un 'x' entre les
+  # Vous devez cocher la phrase qui décrit le graphique d'un 'x' entre les
   # crochets [] -> [x]. Ensuite, vous devez recompiler la version HTML du
   # bloc-notes (bouton 'Rendu') sans erreur pour réactualiser les résultats.
   # Assurez-vous de bien comprendre ce qui est coché ou pas : vous n'aurez plus
@@ -167,14 +169,14 @@ test_that("Chunks 'dloess', 'dloesscomment' & 'tseries' : Décomposition LOESS d
   expect_true(is_identical_to_ref("dloess"))
   # La décomposition LOESS de la série `death_ts` n'est pas réalisée ou est
   # incorrecte
-  # Vous devez indiquer que vous vouler extraire la tendance.
+  # Vous devez indiquer que vous voulez extraire la tendance.
   # Vous devez indiquer que vous voulez extraire un cycle saisonnier par moyenne
-  # mobile en choisissant une fenêtre `s.window=` imparie immédiatement
+  # mobile en choisissant une fenêtre `s.window=` impaire immédiatement
   # supérieure à la fréquence de la série.
 
   expect_true(is_identical_to_ref("dloesscomment"))
   # L'interprétation de la décomposition LOESS est (partiellement) fausse
-  # Vous devez cochez la phrase qui décrit le graphique d'un 'x' entre les
+  # Vous devez cocher la phrase qui décrit le graphique d'un 'x' entre les
   # crochets [] -> [x]. Ensuite, vous devez recompiler la version HTML du
   # bloc-notes (bouton 'Rendu') sans erreur pour réactualiser les résultats.
   # Assurez-vous de bien comprendre ce qui est coché ou pas : vous n'aurez plus
@@ -183,22 +185,22 @@ test_that("Chunks 'dloess', 'dloesscomment' & 'tseries' : Décomposition LOESS d
   expect_true(is_identical_to_ref("tseries"))
   # L'extraction des composantes de la décomposition LOESS en un objet **mts**
   # n'est pas faite ou est incorrecte.
-  # Vous devez utiliser ici la fonction `tseries` et assigner le résultat à0
+  # Vous devez utiliser ici la fonction `tseries` et assigner le résultat à
   # `death_mts`.
 })
 
 test_that("Chunks 'sspectrum' & 'sspectrumcomment' : Cycles de la composante saisonnière", {
-  expect_true(is_identical_to_ref("dspectrum"))
+  expect_true(is_identical_to_ref("sspectrum"))
   # Le graphique n'est pas réalisé ou est incorrect.
   # Avez-vous réalisé l'analyse spectrale de la composante "seasonal" ?
   # Avez-vous bien employé les valeurs de 3 et de 5 pour lisser le spectre ?
   # Avez-vous effectué le périodogramme d'une composante de la série
   # `death_mts` ?
-  # Avez-vous bien assigné le résultat du calcul à `sspec' ?
+  # Avez-vous bien assigné le résultat du calcul à `sspec` ?
   
   expect_true(is_identical_to_ref("sspectrumcomment"))
   # L'interprétation du graphique est (partiellement) fausse
-  # Vous devez cochez la phrase qui décrit le graphique d'un 'x' entre les
+  # Vous devez cocher la phrase qui décrit le graphique d'un 'x' entre les
   # crochets [] -> [x]. Ensuite, vous devez recompiler la version HTML du
   # bloc-notes (bouton 'Rendu') sans erreur pour réactualiser les résultats.
   # Assurez-vous de bien comprendre ce qui est coché ou pas : vous n'aurez plus
@@ -213,7 +215,7 @@ test_that("Chunks 'month' & 'monthcomment' : Mortalité par mois", {
   
   expect_true(is_identical_to_ref("monthcomment"))
   # L'interprétation du graphique est (partiellement) fausse
-  # Vous devez cochez les phrases qui décrivent le graphique d'un 'x' entre les
+  # Vous devez cocher les phrases qui décrivent le graphique d'un 'x' entre les
   # crochets [] -> [x]. Ensuite, vous devez recompiler la version HTML du
   # bloc-notes (bouton 'Rendu') sans erreur pour réactualiser les résultats.
   # Assurez-vous de bien comprendre ce qui est coché ou pas : vous n'aurez plus
@@ -230,19 +232,20 @@ test_that("Chunks 'racf' & 'racfcomment' : Analyse de l'autocorrélation des ré
   expect_true(is_identical_to_ref("racfcomment"))
   # L'interprétation du graphique d'autocorrélation des résidus est
   # (partiellement) fausse
-  # Vous devez cochez les phrases qui décrivent le graphique d'un 'x' entre les
+  # Vous devez cocher les phrases qui décrivent le graphique d'un 'x' entre les
   # crochets [] -> [x]. Ensuite, vous devez recompiler la version HTML du
   # bloc-notes (bouton 'Rendu') sans erreur pour réactualiser les résultats.
   # Assurez-vous de bien comprendre ce qui est coché ou pas : vous n'aurez plus
   # cette aide plus tard dans le travail de groupe ou les interrogations !
 })
 
-test_that("La partie discussion et conclusions est-elle remplie ?", {
-  expect_true(!(rmd_select(death, by_section("Discussion et conclusions")) |>
-      as_document() |> grepl("...votre discussion ici...", x = _,
-        fixed = TRUE) |> any()))
-  # La discussion et la conclusion ne sont pas faites
-  # Remplacez "...votre discussion ici..." par vos phrases de commentaires
-  # libres (à noter que le contenu de cette section n'est pas évalué
-  # automatiquement, mais il le sera par vos enseignants).
+test_that("Chunk 'discussioncomment' : discussion et conclusions", {
+  expect_true(is_identical_to_ref("discussioncomment"))
+  # La discussion et les conclusions sont (partiellement) fausses
+  # Vous devez cocher les phrases qui forment une discussion et des conclusions
+  # correctes d'un 'x' entre les crochets [] -> [x]. Ensuite, vous devez
+  # recompiler la version HTML du bloc-notes (bouton 'Rendu') sans erreur pour
+  # réactualiser les résultats.
+  # Reprenez l'ensemble de vos analyses (tendance générale, cycle saisonnier,
+  # résidus) et rappelez-vous de ce qui s'est passé en 2020 et 2021.
 })

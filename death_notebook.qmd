@@ -9,6 +9,8 @@ format:
     toc: true
 editor: visual
 lang: fr
+svbox: 2026
+vm: "Ubuntu 24.04.3 LTS"
 ---
 
 ```{r setup, include=FALSE}
@@ -22,7 +24,9 @@ SciViews::R(___, lang = "fr")
 
 # Introduction
 
-L'office des statistiques de Belgique répertorie le nombre de décès en Belgique au cours du temps. Ces données sont disponibles ici : <https://statbel.fgov.be/fr/themes/population/mortalite-et-esperance-de-vie/tables-de-mortalite-et-esperance-de-vie>
+La mortalité est un indicateur central de l'état de santé d'une population. En Belgique, Statbel, l'office belge de statistique, répertorie le nombre de décès au cours du temps. Ces données sont disponibles ici : <https://statbel.fgov.be/fr/themes/population/mortalite-et-esperance-de-vie/tables-de-mortalite-et-esperance-de-vie>
+
+Le nombre de décès n'est pas constant d'un mois à l'autre ni d'une année à l'autre. Il peut évoluer lentement avec la taille et le vieillissement de la population, varier selon la période de l'année, ou augmenter brusquement lors d'événements exceptionnels. Une série temporelle de plusieurs décennies permet de séparer ces différentes composantes : une tendance à long terme, des cycles et des fluctuations irrégulières. Les outils de décomposition des séries temporelles servent à identifier chacune d'elles et à juger de leur importance.
 
 # But
 
@@ -32,7 +36,19 @@ Notre but est de décomposer et d'analyser ces données pour déterminer s'il y 
 
 Les données de mortalité cumulée mensuelle entre 1992 et 2021 proviennent du site de l'office des statistiques de Belgique : <https://statbel.fgov.be/fr/themes/population/mortalite-et-esperance-de-vie/tables-de-mortalite-et-esperance-de-vie>
 
-L'analyse est réalisée avec la [SciViews Box 2025](https://www.sciviews.org/software/svbox/) dans [Saturn Cloud](https://saturncloud.io) (Linux Ubuntu 22.04), utilisant le [logiciel R](https://www.r-project.org) (`r R.version.string`). Le package {pastecs} version `r packageVersion("pastecs")` est utilisé pour étudier la série temporelle.
+L'analyse est réalisée dans la [SciViews Box `r rmarkdown::metadata$svbox`](https://www.sciviews.org/software/svbox/) dans [Saturn Cloud](https://saturncloud.io) (`r rmarkdown::metadata$vm`) avec le [logiciel R](https://www.r-project.org) (`r R.version.string`). Le package {pastecs} version `r packageVersion("pastecs")` est utilisé pour étudier la série temporelle.
+
+## Déclaration sur l'utilisation de l'IA
+
+<!--% Spécifiez si vous avez employé l'intelligence artificielle dans votre projet. -->
+
+```{r ai_comment, output='asis'}
+select_answer(r"-{
+[] -   Ce document a été rédigé en étant assisté par l'Intelligence Artificielle.
+[] -   Ce document a été rédigé sans recours à l'Intelligence Artificielle.}-")
+```
+
+<!-- Précisez ci-dessous l'utilisation que vous avez faite de l'IA. Citez le modèle utilisé. -->
 
 # Analyse
 
@@ -44,7 +60,7 @@ death <- read(___)
 
 Voici le graphique de la mortalité cumulée mensuellement en Belgique de 1992 à 2021.
 
-<!--%  Convertissez le jeu de données en série temporelle univariée dans `death_ts`. Attention, utilisez le `$` pour extraire la colonne d'intérêt. Réalisez ensuite un graphique de votre objet `death_ts`.-->
+<!--%  Convertissez le jeu de données en série temporelle univariée dans `death_ts`. Attention, utilisez le `$` pour extraire la colonne d'intérêt. Réalisez ensuite un graphique de votre objet `death_ts`. -->
 
 ```{r dts, record='ROA', object='death_ts', arg='tsp,class'}
 death_ts <- ts(___)
@@ -55,12 +71,12 @@ plot(death_ts)
 
 ```{r dtscomment, output='asis'}
 select_answer(r"-{
-[] -  Une tendance générale domine la série.
-[] -  Un cycle saisonnier domine la série.
-[] -  Un cycle de fréquence indéterminée domine la série.
-[] -  Un cycle et une tendance générale sont tous deux clairement visibles dans la série.
-[] -  La série ne présente *a priori* aucune caractéristique remaquable sur le graphique.
-[] -  La série semble s'apparenter à du bruit blanc.}-")
+[] -   Une tendance générale domine la série.
+[] -   Un cycle saisonnier domine la série.
+[] -   Un cycle de fréquence indéterminée domine la série.
+[] -   Un cycle et une tendance générale sont tous deux clairement visibles dans la série.
+[] -   La série ne présente *a priori* aucune caractéristique remarquable sur le graphique.
+[] -   La série semble s'apparenter à du bruit blanc.}-")
 ```
 
 ## Description de la série
@@ -75,8 +91,8 @@ dacf <- ___
 
 ```{r dacfcomment, output='asis'}
 select_answer(r"-{
-[] -   L’autocorrélation est forte.
-[] -   L’autocorrélation est faible.
+[] -   L'autocorrélation est forte et décroît lentement (comme pour une tendance).
+[] -   L'autocorrélation est faible, proche de zéro.
 [] -   L'autocorrélation est typique d'une série cyclique.
 [] -   Le graphique de l'autocorrélation est représentatif d'un cycle mensuel dominant.
 [] -   Le graphique de l'autocorrélation est représentatif d'un cycle annuel dominant.
@@ -95,16 +111,16 @@ plot(death_trend)
 
 ```{r dtrendcomment, output='asis'}
 select_answer(r"-{
-[] -  Il y a une tendance générale significative à l’augmentation de la série.
-[] -  Il n’y a pas de tendance générale.
-[] -  Il y a une tendance générale significative à la diminution de la série.}-")
+[] -   Il y a une tendance générale significative à l'augmentation de la série.
+[] -   Il n'y a pas de tendance générale.
+[] -   Il y a une tendance générale significative à la diminution de la série.}-")
 ```
 
 ## Stationnarisation et étude des cycles
 
 Étant donné que la série n'est pas stationnaire, nous ne pouvons effectuer d'analyse spectrale. Nous allons la filtrer par la méthode des différences afin de la stationnariser.
 
-<!--% Stationnarisez la série grâce à la méthode des différences et effectuez-en le graphique. Untilisez un décalage (lag) adéquat pour vous assurer de conserver un maximum du cycle saisonnier dans la série filtrée. -->
+<!--% Stationnarisez la série grâce à la méthode des différences et effectuez-en le graphique. Utilisez un décalage (lag) adéquat pour vous assurer de conserver un maximum du cycle saisonnier dans la série filtrée. -->
 
 ```{r dtsdiff, record='ROP', object='death_diff', arg='specs'}
 death_diff <- tsd(___)
@@ -148,14 +164,14 @@ plot(death_loess, col = 1:4)
 
 <!--% Interprétez cette décomposition de la série. -->
 
-```{r dloesscomment, output= 'asis'}
+```{r dloesscomment, output='asis'}
 select_answer(r"-{
 [] -   La tendance générale montre une augmentation régulière et continue.
 [] -   La tendance générale montre une augmentation à partir de la moitié de la série.
 [] -   La tendance générale montre une augmentation à partir de la moitié de la série et des valeurs particulièrement élevées durant les deux dernières années.
 
 [] -   Le cycle saisonnier est régulier dans le temps.
-[] -   Le cycle saisonnier évolue dans le temps, mais son amplitude reste constante.
+[] -   Le cycle saisonnier évolue dans le temps, mais son amplitude reste à peu près constante.
 [] -   Le cycle saisonnier évolue dans le temps et son amplitude est à l'augmentation dans le temps.
 [] -   Le cycle saisonnier évolue dans le temps et son amplitude diminue dans le temps.
 
@@ -177,7 +193,7 @@ death_mts <- ___
 sspec <- spectrum(___)
 ```
 
-<!--% Interprétez vos résultats de cette analyse spectrale et comparez-là à l'analyse spectrale après filtrage par les différences que vous aviez obtenu plus haut. -->
+<!--% Interprétez vos résultats de cette analyse spectrale et comparez-la à l'analyse spectrale après filtrage par les différences que vous aviez obtenue plus haut. -->
 
 ```{r sspectrumcomment, output='asis'}
 select_answer(r"-{
@@ -190,7 +206,7 @@ select_answer(r"-{
 [] -   Un cycle à cinq ans est observé de manière significative.
 
 [] -   Par rapport à l'analyse spectrale sur les différences, le spectre est très semblable.
-[] -   Par rapport à l'analyse spectrale sur les différences, le spectre montre une sélection uniquement de d'un cycle annuel.
+[] -   Par rapport à l'analyse spectrale sur les différences, le spectre montre une sélection uniquement d'un cycle annuel.
 [] -   Par rapport à l'analyse spectrale sur les différences, le spectre montre une sélection d'un cycle annuel avec échos significatifs à 2, 3, 4 et 5 ans^-1^ (à cause du lissage par moyennes mobiles).
 [] -   Par rapport à l'analyse spectrale sur les différences, le spectre montre une sélection d'un cycle annuel avec échos non significatifs à 2, 3, 4 et 5 ans^-1^ (à cause du lissage par moyennes mobiles).}-")
 ```
@@ -216,7 +232,7 @@ select_answer(r"-{
 
 ## Étude des résidus
 
-<!--% Sélectionnez la composante qui vous intéresse et étudiez-là du point de vue de l'autocorrélation. -->
+<!--% Sélectionnez la composante qui vous intéresse et étudiez-la du point de vue de l'autocorrélation. -->
 
 ```{r racf, record='ROP', object='racf'}
 racf <- ___
@@ -226,18 +242,31 @@ racf <- ___
 
 ```{r racfcomment, output='asis'}
 select_answer(r"-{
-[] -   L’autocorrélation est forte.
-[] -   L’autocorrélation est faible.
+[] -   L'autocorrélation est forte et décroît lentement (comme pour une tendance).
+[] -   L'autocorrélation est faible, même si quelques valeurs dépassent l'enveloppe de confiance.
 
 [] -   L'autocorrélation est typique d'une série cyclique.
 [] -   Le graphique de l'autocorrélation est représentatif d'un cycle mensuel dominant.
 [] -   Le graphique de l'autocorrélation est représentatif d'un cycle annuel dominant.
 [] -   Le graphique de l'autocorrélation est représentatif d'une tendance à long terme dominante.
-[] -   Le graphique de l'autocorrélation est représentatif d'un bruit blanc.}-")
+[] -   Le graphique de l'autocorrélation est proche de celui d'un bruit blanc, avec une faible autocorrélation résiduelle sur quelques mois.}-")
 ```
 
 # Discussion et conclusions
 
-<!--% Rédigez une discussion et des conclusions en 2 à 4 phrases sur base de votre étude. Rappelez-vous de ce qui s'est passé en 2020 et 2021 et mettez vos observations en relation avec ces faits. Remplacez le texte ci-dessous par votre discussion. -->
+<!--% Sur base de l'ensemble de vos analyses, sélectionnez les phrases qui constituent une discussion et des conclusions correctes. Rappelez-vous de ce qui s'est passé en 2020 et 2021 et mettez vos observations en relation avec ces faits. -->
 
-...votre discussion ici...
+```{r discussioncomment, output='asis'}
+select_answer(r"-{
+[] -   La mortalité en Belgique ne présente pas de cycle saisonnier marqué.
+[] -   La mortalité en Belgique présente un cycle annuel, avec un maximum en été.
+[] -   La mortalité en Belgique présente un cycle annuel, avec un maximum en hiver.
+
+[] -   La tendance générale de la mortalité augmente à partir de la moitié de la série, et cette hausse est déjà visible avant 2020.
+[] -   La hausse de la tendance générale de la mortalité est uniquement due aux années 2020 et 2021.
+[] -   La tendance générale de la mortalité diminue au cours de la période étudiée.
+
+[] -   Les deux pics de mortalité les plus importants de la série (avril et novembre 2020) s'expliquent par le cycle saisonnier.
+[] -   Les deux pics de mortalité les plus importants de la série (avril et novembre 2020) se retrouvent dans les résidus et correspondent aux deux premières vagues de la pandémie de COVID-19.
+[] -   Les deux pics de mortalité les plus importants de la série (avril et novembre 2020) sont des erreurs dans les données qu'il faut éliminer de l'analyse.}-")
+```
