@@ -208,7 +208,7 @@ test_that("Chunks 'sspectrum' & 'sspectrumcomment' : Cycles de la composante sai
 })
 
 test_that("Chunks 'month' & 'monthcomment' : Mortalité par mois", {
-  expect_true(is_identical_to_ref("month"))
+  expect_true(isTRUE(is_equal_to_ref("month")))
   # Le graphique n'est pas réalisé ou est incorrect.
   # Avez-vous bien employé la composante "seasonal" de `death_mts` ?
   # Avez-vous bien assigné le résultat à 'bpl' ?
